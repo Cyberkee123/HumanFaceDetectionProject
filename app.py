@@ -21,7 +21,7 @@ emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surpri
 # Uses Haar Cascade to locate the face before resizing
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-st.title("😊 Human Emotion Detection")
+st.title("😊 Human Emotion 555 Detection")
 st.write("Upload a photo to predict the emotion.")
 
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
@@ -74,3 +74,4 @@ if uploaded_file is not None:
                 st.bar_chart(prob_df.set_index('Emotion'))
         else:
             st.warning("No face detected. Please ensure the face is clear and centered.")
+
