@@ -11,7 +11,7 @@ st.set_page_config(page_title="Human Emotion 555Detector", layout="centered")
 @st.cache_resource
 def load_emotion_model():
     # Loading model_keras.keras which expects (48, 48, 3) input
-    return tf.keras.models.load_model('model_keras.keras')
+    return tf.keras.models.load_model('model_keras.h5')
 
 model = load_emotion_model()
 # Labels matching the FER-2013 dataset structure used in your notebook
@@ -74,5 +74,6 @@ if uploaded_file is not None:
                 st.bar_chart(prob_df.set_index('Emotion'))
         else:
             st.warning("No face detected. Please ensure the face is clear and centered.")
+
 
 
