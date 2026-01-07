@@ -5,13 +5,13 @@ import numpy as np
 import pandas as pd
 
 # 1. Page Configuration
-st.set_page_config(page_title="Human Emotion Detector", layout="centered")
+st.set_page_config(page_title="Human Emotion 111 Detector", layout="centered")
 
 # 2. Load the model and labels
 @st.cache_resource
 def load_emotion_model():
     # Loading the model saved after training
-    return tf.keras.models.load_model('full_emotion_model.keras')
+    return tf.keras.models.load_model('model_keras.keras')
 
 model = load_emotion_model()
 # Labels matching the FER-2013 dataset structure
@@ -74,3 +74,4 @@ if uploaded_file is not None:
                 st.bar_chart(prob_df.set_index('Emotion'))
         else:
             st.warning("No face detected. Please ensure the face is clear and centered.")
+
