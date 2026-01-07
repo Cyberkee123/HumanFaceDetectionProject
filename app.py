@@ -6,13 +6,13 @@ import numpy as np
 # Use caching to load the model once
 @st.cache_resource
 def load_emotion_model():
-    model = tf.keras.models.load_model('full_emotion_model.keras')
+    model = tf.keras.models.load_model('model_keras.keras')
     return model
 
 model = load_emotion_model()
 emotion_labels = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise']
 
-st.title("Human Emotion Detection Web 2 App")
+st.title("Human Emotion Detection Web cnn App")
 st.write("Upload an image for emotion prediction.")
 
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
@@ -37,3 +37,4 @@ if uploaded_file is not None:
     predicted_emotion = emotion_labels[np.argmax(prediction)]
 
     st.success(f'Prediction: {predicted_emotion}')
+
