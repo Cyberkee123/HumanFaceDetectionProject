@@ -6,7 +6,7 @@ import numpy as np
 # Use caching to load the model once
 @st.cache_resource
 def load_emotion_model():
-    model = tf.keras.models.load_model('model_weights.weights.h5')
+    model = tf.keras.models.load_model('full_emotion_model.keras')
     return model
 
 model = load_emotion_model()
@@ -37,4 +37,5 @@ if uploaded_file is not None:
     predicted_emotion = emotion_labels[np.argmax(prediction)]
 
     st.success(f'Prediction: {predicted_emotion}')
+
 
