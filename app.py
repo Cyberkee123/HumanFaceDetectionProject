@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 # 1. Page Configuration
-st.set_page_config(page_title="Human Emotion Detector", layout="centered")
+st.set_page_config(page_title="Human Emotion 555Detector", layout="centered")
 
 # 2. Load the model and labels
 @st.cache_resource
@@ -74,4 +74,5 @@ if uploaded_file is not None:
                 st.bar_chart(prob_df.set_index('Emotion'))
         else:
             st.warning("No face detected. Please ensure the face is clear and centered.")
+
 
