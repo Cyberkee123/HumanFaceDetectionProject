@@ -10,7 +10,7 @@ def load_emotion_model():
     return model
 
 model = load_emotion_model()
-emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
+emotion_labels = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise']
 
 st.title("Human Emotion Detection Web App")
 st.write("Upload an image for emotion prediction.")
@@ -37,5 +37,6 @@ if uploaded_file is not None:
     predicted_emotion = emotion_labels[np.argmax(prediction)]
 
     st.success(f'Prediction: {predicted_emotion}')
+
 
 
