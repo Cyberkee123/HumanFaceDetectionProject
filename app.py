@@ -20,7 +20,7 @@ emotion_labels = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surpri
 # This is necessary to crop the image so the model only sees the face
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-st.title("😊 Human Emotion Detection")
+st.title("😊 Human Emotion 1 Detection")
 st.write("Upload a photo to see the predicted emotion.")
 
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
@@ -75,4 +75,5 @@ if uploaded_file is not None:
             # Warning if the Haar Cascade fails
             st.warning("No face detected. Try a photo with better lighting or a clearer front-facing view.")
         
+
 
