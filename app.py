@@ -5,13 +5,13 @@ import numpy as np
 import pandas as pd
 
 # 1. Page Configuration
-st.set_page_config(page_title="Human Emotion 556Detector", layout="centered")
+st.set_page_config(page_title="Human Emotion 557Detector", layout="centered")
 
 # 2. Load the model and labels
 @st.cache_resource
 def load_emotion_model():
     # Loading model_keras.keras which expects (48, 48, 3) input
-    return tf.keras.models.load_model('model_keras.h5')
+    return tf.keras.models.load_model('model_weights.h5')
 
 model = load_emotion_model()
 # Labels matching the FER-2013 dataset structure used in your notebook
@@ -21,7 +21,7 @@ emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surpri
 # Uses Haar Cascade to locate the face before resizing
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-st.title("😊 Human Emotion 556 Detection")
+st.title("😊 Human Emotion 557 Detection")
 st.write("Upload a photo to predict the emotion.")
 
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
@@ -74,6 +74,7 @@ if uploaded_file is not None:
                 st.bar_chart(prob_df.set_index('Emotion'))
         else:
             st.warning("No face detected. Please ensure the face is clear and centered.")
+
 
 
 
