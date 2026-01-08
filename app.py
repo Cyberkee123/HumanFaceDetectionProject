@@ -57,7 +57,7 @@ if uploaded_file is not None:
     # Convert to float32, scale to [0, 1], and add batch/channel dimensions
     img_array = resized_image.astype('float32') / 255.0
     img_array = np.expand_dims(img_array, axis=0)  # Becomes (1, 48, 48)
-    img_array = np.expand_dims(img_array, axis=-1) # Becomes (1, 48, 48, 1)
+    #img_array = np.expand_dims(img_array, axis=-1) # Becomes (1, 48, 48, 1)
 
     # 5. Prediction
     if st.button("Predict Emotion"):
@@ -68,8 +68,8 @@ if uploaded_file is not None:
             confidence = predictions[0][max_index] * 100
             
              # SAVE TO SESSION STATE
-             st.session_state.prediction_label = emotion_labels[max_index]
-             st.session_state.confidence_score = predictions[0][max_index] * 100
+             #st.session_state.prediction_label = emotion_labels[max_index]
+             #st.session_state.confidence_score = predictions[0][max_index] * 100
 
  # This makes sure the result doesn't disappear on subsequent reruns
  # if st.session_state.prediction_label:
@@ -80,3 +80,4 @@ if uploaded_file is not None:
 
  #           st.success(f"Prediction: {label.upper()}")
  #           st.info(f"Confidence Level: {confidence:.2f}%")
+
