@@ -5,10 +5,10 @@ import numpy as np
 
 # 1. Initialize session state variables at the top
 # This prevents them from being reset every time the script reruns
- if 'prediction_label' not in st.session_state:
-     st.session_state.prediction_label = None
- if 'confidence_score' not in st.session_state:
-     st.session_state.confidence_score = None
+if 'prediction_label' not in st.session_state:
+   st.session_state.prediction_label = None
+if 'confidence_score' not in st.session_state:
+   st.session_state.confidence_score = None
 
 # -------------------------------
 # Load model (cached, safe)
@@ -80,5 +80,6 @@ if uploaded_file is not None:
 
  #           st.success(f"Prediction: {label.upper()}")
  #           st.info(f"Confidence Level: {confidence:.2f}%")
+
 
 
