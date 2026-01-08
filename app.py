@@ -105,7 +105,7 @@ if uploaded_file is not None:
     # Convert to float32, scale to [0, 1], and add batch/channel dimensions
     img_array = resized_image.astype('float32') / 255.0
     img_array = np.expand_dims(img_array, axis=0)  # Becomes (1, 48, 48)
-    #img_array = np.expand_dims(img_array, axis=-1) # Becomes (1, 48, 48, 1)
+    img_array = np.expand_dims(img_array, axis=-1) # Becomes (1, 48, 48, 1)
 
     # 5. Prediction
     if st.button("Predict Emotion"):
@@ -137,6 +137,7 @@ if uploaded_file is not None:
 if st.session_state.prediction_label:
     st.success(f"Result: {st.session_state.prediction_label.upper()}")
     st.info(f"Confidence: {st.session_state.confidence_score:.2f}%")
+
 
 
 
