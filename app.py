@@ -14,9 +14,9 @@ def load_emotion_model():
 
 model = load_emotion_model()
 
-emotion_labels = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad']
+emotion_labels = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'suprise']
 
-st.title("Human Emotion Detection Web App")
+st.title("Human Emotion Detection 1111 Web App")
 
 # --------------------------------
 # Image uploader
@@ -64,3 +64,4 @@ if uploaded_file is not None:
         f"Predicted Emotion: **{emotion_labels[predicted_class]}** "
         f"(Confidence: {confidence:.2f})"
     )
+
