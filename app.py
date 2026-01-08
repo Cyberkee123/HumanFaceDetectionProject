@@ -17,7 +17,7 @@ def load_emotion_model():
 model = load_emotion_model()
 emotion_labels = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise']
 
-st.title("Human Emotion Detection")
+st.title("Human Emotion 1234 Detection")
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
@@ -46,3 +46,4 @@ if uploaded_file is not None:
 if st.session_state.prediction_label:
     st.success(f"Result: {st.session_state.prediction_label.upper()}")
     st.info(f"Confidence: {st.session_state.confidence_score:.2f}%")
+
