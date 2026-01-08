@@ -72,7 +72,7 @@ if uploaded_file is not None:
              #st.session_state.confidence_score = predictions[0][max_index] * 100
 
  # This makes sure the result doesn't disappear on subsequent reruns
- # if st.session_state.prediction_label:
+ if st.session_state.prediction_label:
              st.success(f"Result: {st.session_state.prediction_label.upper()}")
              st.info(f"Confidence: {st.session_state.confidence_score:.2f}%")
 
@@ -80,6 +80,7 @@ if uploaded_file is not None:
 
  #           st.success(f"Prediction: {label.upper()}")
  #           st.info(f"Confidence Level: {confidence:.2f}%")
+
 
 
 
