@@ -124,8 +124,6 @@ if uploaded_file is not None:
 #     st.success(f"Result: {st.session_state.prediction_label.upper()}")
 #     st.info(f"Confidence: {st.session_state.confidence_score:.2f}%")
 
-
-
 #  #           st.success(f"Prediction: {label.upper()}")
 #  #           st.info(f"Confidence Level: {confidence:.2f}%")
 
@@ -135,8 +133,9 @@ if uploaded_file is not None:
 
 # 4. Display Result (Ensure this is at the VERY LEFT margin)
 if st.session_state.prediction_label:
-    st.success(f"Result: {st.session_state.prediction_label.upper()}")
-    st.info(f"Confidence: {st.session_state.confidence_score:.2f}%")
+   st.success(f"Result: {st.session_state.prediction_label.upper()}")
+   st.info(f"Confidence: {st.session_state.confidence_score:.2f}%")
+
 
 
 
