@@ -12,7 +12,7 @@
 # @st.cache_resource
 # def load_emotion_model():
 #     # Load model once and cache it
-#     return tf.keras.models.load_model("full_emotion_model.keras", compile=False)
+#     return tf.keras.models.load_model("model_keras.keras", compile=False)
 
 # model = load_emotion_model()
 # emotion_labels = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise']
@@ -135,6 +135,7 @@ if uploaded_file is not None:
 if st.session_state.prediction_label:
    st.success(f"Result: {st.session_state.prediction_label.upper()}")
    st.info(f"Confidence: {st.session_state.confidence_score:.2f}%")
+
 
 
 
