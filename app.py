@@ -79,7 +79,7 @@ emotion_labels = [
 # -------------------------------
 # Streamlit UI
 # -------------------------------
-st.title("Human pppp Emotion Detection (4445566 full_emotion_model.keras)Web App")
+st.title("Human pppp Emotion Detection (444556677 full_emotion_model.keras)Web App")
 st.write("Upload an image for emotion prediction.")
 
 uploaded_file = st.file_uploader(
@@ -135,6 +135,7 @@ if uploaded_file is not None:
 if st.session_state.prediction_label:
    st.success(f"Result: {st.session_state.prediction_label.upper()}")
    st.info(f"Confidence: {st.session_state.confidence_score:.2f}%")
+
 
 
 
