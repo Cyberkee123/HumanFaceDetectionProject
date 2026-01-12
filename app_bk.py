@@ -1,49 +1,129 @@
 import streamlit as st
-import tensorflow as tf
 import cv2
 import numpy as np
+from tensorflow.keras.models import load_model
 
-# Load the face detector
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+# -----------------------------
+# Page config
+# -----------------------------
+st.set_page_config(
+    page_title="Facial Emotion Recognition",
+    layout="centered"
+)
 
+st.title("😊 Facial Emotion Recognition")
+
+# -----------------------------
+# Load model (cached)
+# -----------------------------
 @st.cache_resource
 def load_emotion_model():
-    return tf.keras.models.load_model("improved_emotion_model.keras", compile=False)
+    return load_model("full_emotion_model.keras")
 
 model = load_emotion_model()
-emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
 
-st.title("Facial Emotion Detection (Improved)")
-uploaded_file = st.file_uploader("Upload a face photo...", type=["jpg", "png"])
+# -----------------------------
+# Emotion labels
+# ⚠️ MUST match training folder order
+# -----------------------------
+emotion_labels = [
+    "angry",
+    "disgust",
+    "fear",
+    "happy",
+    "neutral",
+    "sad",
+    "surprise"
+]
 
-if uploaded_file:
-    file_bytes = np.frombuffer(uploaded_file.read(), np.uint8)
-    image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+# -----------------------------
+# Face detector
+# -----------------------------
+face_cascade = cv2.CascadeClassifier(
+    cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+)
+
+# -----------------------------
+# Preprocess face for model
+# -----------------------------
+def preprocess_face(face_img):
+    face_img = cv2.resize(face_img, (48, 48))
+    face_img = cv2.cvtColor(face_img, cv2.COLOR_BGR2RGB)
+    face_img = face_img / 255.0
+    face_img = np.expand_dims(face_img, axis=0)
+    return face_img
+
+# -----------------------------
+# Input source
+# -----------------------------
+option = st.radio(
+    "Choose input method:",
+    ("Upload Image", "Use Camera")
+)
+
+if option == "Upload Image":
+    uploaded_file = st.file_uploader(
+        "Upload an image",
+        type=["jpg", "jpeg", "png"]
+    )
+
+    if uploaded_file is not None:
+        image_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
+        image = cv2.imdecode(image_bytes, cv2.IMREAD_COLOR)
+
+elif option == "Use Camera":
+    camera_image = st.camera_input("Take a photo")
+
+    if camera_image is not None:
+        image_bytes = np.asarray(bytearray(camera_image.read()), dtype=np.uint8)
+        image = cv2.imdecode(image_bytes, cv2.IMREAD_COLOR)
+
+# -----------------------------
+# Process image
+# -----------------------------
+if "image" in locals():
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    
-    # 1. Detect Faces
-    faces = face_cascade.detectMultiScale(gray, 1.1, 4)
-    
+    faces = face_cascade.detectMultiScale(
+        gray,
+        scaleFactor=1.3,
+        minNeighbors=5
+    )
+
     if len(faces) == 0:
-        st.warning("No face detected. Please try a clearer photo.")
+        st.warning("No face detected 😕")
     else:
         for (x, y, w, h) in faces:
-            # 2. Crop only the face area
-            face_crop = image[y:y+h, x:x+w]
-            
-            # 3. Preprocess the cropped face
-            input_face = cv2.resize(face_crop, (48, 48))
-            input_face = input_face.astype('float32') / 255.0
-            input_face = np.expand_dims(input_face, axis=0)
-            
-            # 4. Predict
-            preds = model.predict(input_face)
-            label = emotion_labels[np.argmax(preds)]
-            confidence = np.max(preds) * 100
-            
-            # Draw on original image for display
-            cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
-            cv2.putText(image, label, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0,255,0), 2)
+            face = image[y:y+h, x:x+w]
 
-        st.image(image, channels="BGR", caption="Detection Result")
-        st.success(f"Detected Emotion: {label} ({confidence:.1f}%)")
+            face_input = preprocess_face(face)
+            predictions = model.predict(face_input, verbose=0)
+
+            emotion_index = np.argmax(predictions)
+            emotion = emotion_labels[emotion_index]
+            confidence = predictions[0][emotion_index]
+
+            # Draw bounding box & label
+            cv2.rectangle(
+                image,
+                (x, y),
+                (x + w, y + h),
+                (0, 255, 0),
+                2
+            )
+
+            cv2.putText(
+                image,
+                f"{emotion} ({confidence:.2f})",
+                (x, y - 10),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.8,
+                (0, 255, 0),
+                2
+            )
+
+        st.image(image, channels="BGR")
+
+        # Show probability scores
+        st.subheader("Emotion Probabilities")
+        for i, label in enumerate(emotion_labels):
+            st.write(f"{label}: {predictions[0][i]:.3f}")
