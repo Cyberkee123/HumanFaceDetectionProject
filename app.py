@@ -15,9 +15,9 @@ st.title("😊 Facial Emotion Recognition")
 # -----------------------------
 # Google Drive config
 # -----------------------------
-FILE_ID = "1gd8pl9pPY0XZe4IJV8ho-WNHcnrsWFOf"
+#FILE_ID = "1gd8pl9pPY0XZe4IJV8ho-WNHcnrsWFOf"
 MODEL_PATH = "full_emotion_model.keras"
-GDRIVE_URL = f"https://drive.google.com/drive/folders/1gd8pl9pPY0XZe4IJV8ho-WNHcnrsWFOf"
+GDRIVE_URL = f"https://drive.google.com/file/d/1F_7VlJxqVrIOv_6EdnxPCh7jfDKTZkSm/view?usp=drive_link"
 
 # -----------------------------
 # Download model if not exists
