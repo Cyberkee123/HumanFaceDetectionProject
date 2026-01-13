@@ -18,38 +18,33 @@ IMG_SIZE = (48, 48)
 FILE_ID = '1K4cQ0qcvylA1aKuM5iD4iHuKPpjulauT'
 MODEL_PATH = 'full_emotion_model.keras'
 
-@st.cache_resource
-def load_emotion_model():
-    # Download from Drive if needed
-    if not os.path.exists(MODEL_PATH):
-        url = f'https://drive.google.com/uc?id={FILE_ID}'
-        gdown.download(url, MODEL_PATH, quiet=False)
-
+# 1. Define the base VGG16
+    vgg_base = VGG16(weights=None, include_top=False, input_shape=(48, 48, 3))
+    
+    # 2. Build the architecture using Functional API
+    # This explicitly handles the tensor output to avoid the 'list' error
+    x = vgg_base.output
+    if isinstance(x, list):
+        x = x[0]  # Grab the tensor if it's wrapped in a list
+        
+    x = Flatten()(x)
+    x = Dense(256, activation='relu')(x)
+    x = BatchNormalization()(x)
+    x = Dropout(0.5)(x)
+    x = Dense(128, activation='relu')(x)
+    x = BatchNormalization()(x)
+    x = Dropout(0.5)(x)
+    predictions = Dense(6, activation='softmax')(x)
+    
+    model = tf.keras.Model(inputs=vgg_base.input, outputs=predictions)
+    
+    # 3. Load the weights
     try:
-        # Attempt standard load first
-        return load_model(MODEL_PATH, compile=False)
-    except Exception as e:
-        st.warning("Standard load failed, rebuilding model architecture...")
-        
-        # 2. Manual Rebuild (Matches your notebook architecture)
-        # This bypasses the Flatten layer 'list' error by defining the layers explicitly
-        vgg_base = VGG16(weights=None, include_top=False, input_shape=(48, 48, 3))
-        
-        model = Sequential([
-            vgg_base,
-            Flatten(),
-            Dense(256, activation='relu'),
-            BatchNormalization(),
-            Dropout(0.5),
-            Dense(128, activation='relu'),
-            BatchNormalization(),
-            Dropout(0.5),
-            Dense(6, activation='softmax') # 6 emotions: Angry, Fear, Happy, Neutral, Sad, Surprise
-        ])
-        
-        # Load the weights from your .keras file into this structure
         model.load_weights(MODEL_PATH)
         return model
+    except Exception as e:
+        st.error(f"Failed to load weights: {e}")
+        return None
 
 model = load_emotion_model()
 
@@ -86,4 +81,5 @@ if uploaded_file is not None:
         # Display confidence levels
         for i, emotion in enumerate(EMOTIONS):
             st.write(f"{emotion}: {prediction[0][i]:.2f}")
+
 
