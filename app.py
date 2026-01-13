@@ -7,9 +7,11 @@ from PIL import Image
 import gdown
 import os
 
+#https://drive.google.com/file/d/1F-wDIYbohEzmoyKezHVoB_hPMXW3OaXx/view?usp=sharing
+
 # 1. Configuration and Model Retrieval
 # Replace 'YOUR_GOOGLE_DRIVE_FILE_ID' with the actual ID from your shareable link
-FILE_ID = '130UmJ7x2YWv4gsyU8JBY07CdW_XPUYj3' 
+FILE_ID = '1F-wDIYbohEzmoyKezHVoB_hPMXW3OaXx' 
 MODEL_PATH = 'full_emotion_model.keras'
 
 @st.cache_resource
@@ -25,7 +27,7 @@ def load_emotion_model():
     return load_model(MODEL_PATH)
 
 # Define the classes based on the dataset structure
-# Observed labels: Angry, Fear, Happy, Neutral, Sad, 
+# Observed labels: Angry, Fear, Happy, Neutral, Sad, Surprise
 CLASS_LABELS = ['Angry', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
 
 # 2. Image Preprocessing
@@ -65,4 +67,5 @@ if uploaded_file is not None:
         
         # Optional: Show probability chart
         st.bar_chart(dict(zip(CLASS_LABELS, prediction[0])))
+
 
