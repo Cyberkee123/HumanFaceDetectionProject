@@ -17,7 +17,9 @@ def load_emotion_model():
     """Downloads the model from Google Drive if not present and loads it."""
     if not os.path.exists(MODEL_PATH):
         with st.spinner("Downloading model from Google Drive..."):
-            url = f'https://drive.google.com/file/d/130UmJ7x2YWv4gsyU8JBY07CdW_XPUYj3/view?usp=sharing'
+            url = f'https://drive.google.com/uc?id={FILE_ID}'
+            #url = f'https://drive.google.com/uc?id=130UmJ7x2YWv4gsyU8JBY07CdW_XPUYj3'
+            #url = f'https://drive.google.com/file/d/130UmJ7x2YWv4gsyU8JBY07CdW_XPUYj3/view?usp=sharing'
             gdown.download(url, MODEL_PATH, quiet=False)
     
     return load_model(MODEL_PATH)
@@ -63,3 +65,4 @@ if uploaded_file is not None:
         
         # Optional: Show probability chart
         st.bar_chart(dict(zip(CLASS_LABELS, prediction[0])))
+
