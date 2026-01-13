@@ -2,6 +2,9 @@ import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Flatten, Dense, Dropout, BatchNormalization
+from tensorflow.keras.applications import VGG16
 import numpy as np
 from PIL import Image
 import gdown
@@ -11,6 +14,7 @@ import os
 #https://drive.google.com/file/d/1K4cQ0qcvylA1aKuM5iD4iHuKPpjulauT/view?usp=sharing
 
 # 1. Constants
+IMG_SIZE = (48, 48)
 FILE_ID = '1K4cQ0qcvylA1aKuM5iD4iHuKPpjulauT'
 MODEL_PATH = 'full_emotion_model.keras'
 
@@ -53,7 +57,7 @@ model = load_emotion_model()
 # 2. Define Emotion Labels (Based on your dataset structure)
 EMOTIONS = ['Angry', 'Fear', 'Happy', 'Neutral', 'Sad', 'Suprise']
 
-st.title("Facial Emotion Recognition")
+st.title("Facial Emotion 7788Recognition")
 st.write("Upload a photo to detect the emotion.")
 
 # 3. Image Upload Interface
@@ -82,3 +86,4 @@ if uploaded_file is not None:
         # Display confidence levels
         for i, emotion in enumerate(EMOTIONS):
             st.write(f"{emotion}: {prediction[0][i]:.2f}")
+
