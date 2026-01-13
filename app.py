@@ -36,7 +36,6 @@ model = load_emotion_model()
 # -----------------------------
 emotion_labels = [
     "angry",
-    "disgust",
     "fear",
     "happy",
     "neutral",
